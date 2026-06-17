@@ -3,29 +3,28 @@ import './i18n';
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Code2, Zap } from 'lucide-react';
-
+import { ChevronDown, Linkedin, Mail, ExternalLink, Code2, Zap, Sun, Moon, Terminal, Cpu } from 'lucide-react';
 
 export default function Portfolio() {
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
 
+  // ── THEME ──────────────────────────────────────────────
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
+  const isDark = theme === 'dark';
+
+  // ── LANG ───────────────────────────────────────────────
   const languageOptions = [
-    {
-      code: "es",
-      name: "Español",
-      flag: "https://flagcdn.com/w40/es.png"
-    },
-    {
-      code: "en",
-      name: "English",
-      flag: "https://flagcdn.com/w40/gb.png"
-    },
-    {
-      code: "fr",
-      name: "Français",
-      flag: "https://flagcdn.com/w40/fr.png"
-    }
+    { code: "es", name: "Español", flag: "https://flagcdn.com/w40/es.png" },
+    { code: "en", name: "English", flag: "https://flagcdn.com/w40/gb.png" },
+    { code: "fr", name: "Français", flag: "https://flagcdn.com/w40/fr.png" },
   ];
 
   const changeLanguage = (lng) => {
@@ -37,46 +36,31 @@ export default function Portfolio() {
   const { t } = useTranslation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [activeSection, setActiveSection] = useState('sobre-mi');
-  const [scrollY, setScrollY] = useState(0);
-  const [particleArray, setParticleArray] = useState([]);
   const canvasRef = useRef(null);
 
-  
-
-  const sections = ["sobre-mi", "experiencia", "proyectos", "contacto"];
+  const sections = ["sobre-mi", "experiencia", "proyectos", "educacion", "contacto"];
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 200;
-
       sections.forEach((section) => {
         const element = document.getElementById(section);
-
         if (element) {
-          const offsetTop = element.offsetTop;
-          const height = element.offsetHeight;
-
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + height
-          ) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section);
           }
         }
       });
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (langRef.current && !langRef.current.contains(event.target)) {
-        setLangOpen(false);
-      }
+    const handleClickOutside = (e) => {
+      if (langRef.current && !langRef.current.contains(e.target)) setLangOpen(false);
     };
-  
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -84,431 +68,426 @@ export default function Portfolio() {
   const useReveal = () => {
     useEffect(() => {
       const elements = document.querySelectorAll(".reveal");
-  
       const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("reveal-visible");
-            }
-          });
-        },
-        {
-          threshold: 0.1,
-        }
+        (entries) => entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("reveal-visible");
+        }),
+        { threshold: 0.08 }
       );
-  
       elements.forEach((el) => observer.observe(el));
-  
       return () => observer.disconnect();
     }, []);
   };
-
   useReveal();
 
-  const menu = [
-    { label: "Sobre mí", id: "sobre-mi" },
-    { label: "Experiencia", id: "experiencia" },
-    { label: "Proyectos", id: "proyectos" },
-    { label: "Educación", id: "educacion" },
-    { label: "Contacto", id: "contacto" },
-  ];
-
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-  
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
-  
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-  // Track mouse for gradient effects
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+    const handleMouseMove = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Track scroll
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Particle animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const particles = [];
-    for (let i = 0; i < 50; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 1.5 + 0.5,
-        opacity: Math.random() * 0.5 + 0.2,
-      });
-    }
-    setParticleArray(particles);
+    const particles = Array.from({ length: 40 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      radius: Math.random() * 1.2 + 0.3,
+      opacity: Math.random() * 0.35 + 0.08,
+    }));
 
+    let rafId;
     const animate = () => {
-      ctx.fillStyle = 'rgba(15, 15, 15, 0.1)';
+      ctx.fillStyle = isDark ? 'rgba(8,6,18,0.12)' : 'rgba(250,248,255,0.14)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+      const [r, g, b] = isDark ? [196, 181, 253] : [139, 92, 246];
       particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-
+        p.x += p.vx; p.y += p.vy;
         if (p.x > canvas.width || p.x < 0) p.vx *= -1;
         if (p.y > canvas.height || p.y < 0) p.vy *= -1;
-
-        ctx.fillStyle = `rgba(0, 217, 255, ${p.opacity})`;
+        ctx.fillStyle = `rgba(${r},${g},${b},${p.opacity})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
       });
-
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
     };
     animate();
 
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    const handleResize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    return () => { cancelAnimationFrame(rafId); window.removeEventListener('resize', handleResize); };
+  }, [isDark]);
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  // ── DATA ───────────────────────────────────────────────
+
+  const menu = [
+    { labelKey: "nav.about",      id: "sobre-mi" },
+    { labelKey: "nav.experience", id: "experiencia" },
+    { labelKey: "nav.projects",   id: "proyectos" },
+    { labelKey: "nav.education",  id: "educacion" },
+    { labelKey: "nav.contact",    id: "contacto" },
+  ];
 
   const technologies = [
     'React', 'Vue', 'JavaScript', 'TypeScript', 'Python', 'Java',
-    'C#', 'C++', 'C', 'Node.js', 'SQL', '.NET', 'Go', 'Unity', 'ROS2', 'Kafka'
+    'C#', 'C++', 'C', 'Node.js', 'SQL', '.NET', 'Go', 'Unity', 'ROS2', 'Kafka',
   ];
 
   const experience = [
     {
-      title: 'Desarrolladora de Software',
-      company: 'Gestión Tributaria Territorial',
-      period: '[FECHA DE INICIO - PRESENTE]',
-      points: [
-        'Migración de servicios WCF heredados a APIs modernas',
-        'Desarrollo de múltiples servicios API en C# con documentación Swagger',
-        'Trabajo con PL/SQL y .NET para optimización de sistemas',
-        'Participación activa en mejora de arquitectura y rendimiento'
-      ]
+      titleKey:   "experience.job1Title",
+      companyKey: "experience.job1Company",
+      periodKey:  "experience.job1Period",
+      pointKeys:  ["experience.job1p1", "experience.job1p2", "experience.job1p3", "experience.job1p4"],
     },
     {
-      title: 'Prácticas en Desarrollo de Software',
-      company: 'Wispcontrol, Elche, Alicante',
-      period: '[PERÍODO DE PRÁCTICAS]',
-      points: [
-        'Desarrollo de software de gestión para proveedores de Internet',
-        'Implementación de nuevas funcionalidades en JavaScript, HTML y PHP',
-        'Realización de pruebas de funcionalidad y aseguramiento de calidad',
-        'Garantía del buen rendimiento y estabilidad del sistema'
-      ]
+      titleKey:   "experience.job2Title",
+      companyKey: "experience.job2Company",
+      periodKey:  "experience.job2Period",
+      pointKeys:  ["experience.job2p1", "experience.job2p2", "experience.job2p3", "experience.job2p4"],
     },
     {
-      title: 'Proyectos Académicos y Personales',
-      company: 'Múltiples iniciativas de desarrollo',
-      period: '[EN PROCESO]',
-      points: [
-        'Librería de Tracing y Profiling para ROS2 en sistemas robóticos distribuidos',
-        'Desarrollo de juego en Unity (Puffy) en equipo multidisciplinario',
-        'Virtualización de espectáculos con drones usando sistemas distribuidos y Kafka',
-        'Aplicación segura de votación en Go con E2EE y cifrado en descanso'
-      ]
-    }
+      titleKey:   "experience.job3Title",
+      companyKey: "experience.job3Company",
+      periodKey:  "experience.job3Period",
+      pointKeys:  ["experience.job3p1", "experience.job3p2", "experience.job3p3", "experience.job3p4"],
+    },
   ];
 
   const projects = [
-    {
-      title: 'Librería Tracing & Profiling ROS2',
-      description: 'Herramienta para monitorización y optimización del rendimiento de nodos en sistemas robóticos distribuidos, integrada en un monoplaza autónomo de Formula Student.',
-      tags: ['ROS2', 'C++', 'Performance', 'Distributed Systems'],
-      icon: '🤖'
-    },
-    {
-      title: 'Puffy - Mascota Virtual',
-      description: 'Juego interactivo desarrollado en Unity y C#. Participación en diseño, programación y pruebas en colaboración estrecha con equipo multidisciplinario.',
-      tags: ['Unity', 'C#', 'Gamedev', 'Teamwork'],
-      icon: '🎮'
-    },
-    {
-      title: 'Virtualización de Espectáculo con Drones',
-      description: 'Sistema distribuido conectando tres ordenadores mediante Kafka con comunicación segura. Arquitectura cliente/servidor robusta y escalable.',
-      tags: ['Kafka', 'Distributed Systems', 'Architecture'],
-      icon: '🚁'
-    },
-    {
-      title: 'Aplicación Segura de Votación en Go',
-      description: 'Sistema de votación secreta con arquitectura cliente/servidor. Implementa autenticación segura, cifrado E2EE, almacenamiento seguro y copias de seguridad.',
-      tags: ['Go', 'Security', 'Encryption', 'HTTPS'],
-      icon: '🔐'
-    },
-    {
-      title: 'Software de Gestión para ISP',
-      description: 'Aplicación para gestión de proveedores de Internet. Desarrollo en JavaScript, HTML y PHP con enfoque en funcionalidad y rendimiento.',
-      tags: ['JavaScript', 'PHP', 'HTML', 'Web App'],
-      icon: '🌐'
-    }
+    { titleKey: "projects.p1Title", descKey: "projects.p1Desc", tags: ['ROS2', 'C++', 'Performance', 'Distributed Systems'], icon: '🤖' },
+    { titleKey: "projects.p2Title", descKey: "projects.p2Desc", tags: ['Unity', 'C#', 'Gamedev', 'Teamwork'],               icon: '🎮' },
+    { titleKey: "projects.p3Title", descKey: "projects.p3Desc", tags: ['Kafka', 'Distributed Systems', 'Architecture'],      icon: '🚁' },
+    { titleKey: "projects.p4Title", descKey: "projects.p4Desc", tags: ['Go', 'Security', 'Encryption', 'HTTPS'],             icon: '🔐' },
+    { titleKey: "projects.p5Title", descKey: "projects.p5Desc", tags: ['JavaScript', 'PHP', 'HTML', 'Web App'],              icon: '🌐' },
+    { titleKey: "projects.p6Title", descKey: "projects.p6Desc", tags: ['React', 'Web Design', 'Frontend'],    ongoing: true, icon: '⚽' },
+    { titleKey: "projects.p7Title", descKey: "projects.p7Desc", tags: [t("projects.tagAutomation"), 'APIs', 'Scripting'], ongoing: true, icon: '⚙️' },
+    { titleKey: "projects.p8Title", descKey: "projects.p8Desc", tags: ['Linux', 'Self-hosting', 'DevOps'],    ongoing: true, icon: '🖥️' },
   ];
 
-  const languages = [
-    { name: 'Español', level: 'Nativo' },
-    { name: 'Valenciano', level: 'Nativo' },
-    { name: 'Inglés', level: 'Avanzado' },
-    { name: 'Francés', level: 'Básico' }
+  const educationCards = [
+    {
+      labelKey: "education.trainingLabel",
+      content: (
+        <div style={{ borderLeft: '1px solid var(--text-pink)', paddingLeft: '1rem', opacity: 0.8 }}>
+          <p className="font-medium text-sm mb-1" style={{ color: 'var(--text-primary)' }}>{t("education.degree")}</p>
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t("education.degreeSpec")}</p>
+        </div>
+      ),
+    },
+    {
+      labelKey: "education.languagesLabel",
+      content: (
+        <ul className="space-y-3">
+          {[1,2,3,4].map(n => (
+            <li key={n} className="flex justify-between items-center">
+              <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{t(`education.lang${n}Name`)}</span>
+              <span className="mono text-xs" style={{ color: 'var(--text-pink)' }}>{t(`education.lang${n}Level`)}</span>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      labelKey: "education.skillsLabel",
+      content: (
+        <ul className="space-y-2.5">
+          {[1,2,3,4,5].map(n => (
+            <li key={n} className="flex items-center gap-2.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--text-pink)' }} />
+              {t(`education.skill${n}`)}
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+  ];
+
+  const stats = [
+    { value: '8+',  labelKey: 'hero.statProjects' },
+    { value: '16+', labelKey: 'hero.statTech' },
+    { value: '3+',  labelKey: 'hero.statYears' },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
-      
+    <div className="min-h-screen overflow-hidden" style={{ background: 'var(--bg)', color: 'var(--text-primary)', transition: 'background 0.4s ease, color 0.4s ease' }}>
 
       <canvas ref={canvasRef} className="fixed inset-0" />
 
-      {/* Glow effect following mouse */}
-      <div
-        className="glow-effect bg-cyan-400/20"
-        style={{
-          width: '300px',
-          height: '300px',
-          left: mousePosition.x - 150,
-          top: mousePosition.y - 150,
-          transition: 'all 0.15s ease-out'
-        }}
-      />
+      <div className="glow-effect" style={{
+        width: '380px', height: '380px',
+        left: mousePosition.x - 190, top: mousePosition.y - 190,
+        background: 'radial-gradient(circle, var(--glow-primary) 0%, var(--glow-secondary) 60%, transparent 100%)',
+        transition: 'left 0.18s ease-out, top 0.18s ease-out',
+      }} />
 
       <div className="content">
-        {/* NAVBAR */}
-        <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-cyan-500/20">
-          <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            {/* Logo */}
-            <div className="mono text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-500">
-              MDL
-            </div>
 
-            {/* Menu Desktop */}
-            <div className="hidden md:flex gap-8 text-sm">
+        {/* ── NAVBAR ─────────────────────────────────────────── */}
+        <nav className="fixed top-0 left-0 right-0 z-50" style={{
+          backdropFilter: 'blur(20px)',
+          background: 'var(--bg-nav)',
+          borderBottom: '1px solid var(--border-nav)',
+          transition: 'background 0.4s ease',
+        }}>
+          <div className="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div className="mono text-sm font-medium text-transparent bg-clip-text" style={{
+              backgroundImage: isDark ? 'linear-gradient(120deg,#ddd6fe,#fbcfe8)' : 'linear-gradient(120deg,#7c3aed,#db2777)',
+              letterSpacing: '0.2em',
+            }}>MDL</div>
+
+            {/* Desktop */}
+            <div className="hidden md:flex gap-10">
               {menu.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`nav-item cursor-pointer transition ${
-                    activeSection === item.id
-                      ? "text-cyan-400"
-                      : "text-gray-300 hover:text-cyan-400"
-                  }`}
-                >
-                  {item.label}
+                <div key={item.id} onClick={() => scrollToSection(item.id)} className="nav-item transition"
+                  style={{ color: activeSection === item.id ? 'var(--text-nav-active)' : 'var(--text-nav-inactive)' }}>
+                  {t(item.labelKey)}
                 </div>
               ))}
             </div>
 
-            {/* Menu Mobile */}
+            {/* Mobile */}
             <div className="md:hidden relative w-full overflow-hidden">
-
-            {/* Fade izquierdo */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 pointer-events-none bg-gradient-to-r from-slate-950/80 to-transparent z-10"></div>
-
-            {/* Fade derecho */}
-            <div className="absolute right-0 top-0 bottom-0 w-8 pointer-events-none bg-gradient-to-l from-slate-950/80 to-transparent z-10"></div>
-
-            <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex gap-6 min-w-max px-6 whitespace-nowrap">
-                {menu.map((item) => (
-                  <span
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`cursor-pointer transition text-sm ${
-                      activeSection === item.id
-                        ? "text-cyan-400"
-                        : "text-gray-300 hover:text-cyan-400"
-                    }`}
-                  >
-                    {item.label}
-                  </span>
-                ))}
+              <div className="absolute left-0 top-0 bottom-0 w-8 pointer-events-none z-10"
+                style={{ background: 'linear-gradient(to right, var(--fade-edge), transparent)' }} />
+              <div className="absolute right-0 top-0 bottom-0 w-8 pointer-events-none z-10"
+                style={{ background: 'linear-gradient(to left, var(--fade-edge), transparent)' }} />
+              <div className="overflow-x-auto scrollbar-hide">
+                <div className="flex gap-6 min-w-max px-6 whitespace-nowrap">
+                  {menu.map((item) => (
+                    <span key={item.id} onClick={() => scrollToSection(item.id)} className="nav-item cursor-pointer transition"
+                      style={{ color: activeSection === item.id ? 'var(--text-nav-active)' : 'var(--text-nav-inactive)' }}>
+                      {t(item.labelKey)}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-
             </div>
           </div>
         </nav>
 
-        {/* HERO */}
+        {/* ── HERO ───────────────────────────────────────────── */}
         <section className="min-h-screen flex items-center px-6 pt-20">
-          {/* Premium Language Selector */}
-          <div ref={langRef} className="absolute top-24 right-8 z-50">
 
-            {/* Current language */}
-            <button
-              onClick={() => setLangOpen(!langOpen)}
-              className="relative w-11 h-11 rounded-full overflow-hidden border border-cyan-400/40 hover:scale-110 transition shadow-lg hover:shadow-cyan-400/40"
-            >
-              <img
-                src={languageOptions.find(l => l.code === i18n.language)?.flag}
-                alt="language"
-                className="w-full h-full object-cover"
-              />
+          {/* Theme + Lang controls */}
+          <div className="absolute top-24 right-8 z-50 flex items-center gap-3">
+            <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
 
-            {/* Dropdown */}
-            <div
-              className={`absolute right-0 mt-3 flex flex-col gap-2 bg-slate-900/90 backdrop-blur-xl border border-cyan-400/20 p-3 rounded-xl transition-all duration-300 origin-top ${
-                langOpen
-                  ? "opacity-100 scale-100 translate-y-0"
-                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-              }`}
-            >
-              {languageOptions.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => changeLanguage(lang.code)}
-                  className="group flex items-center gap-3 px-2 py-1 rounded-lg hover:bg-cyan-400/10 transition"
-                >
-                  <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-600 group-hover:border-cyan-400 transition">
-                    <img
-                      src={lang.flag}
-                      alt={lang.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  <span className="text-sm text-gray-300 group-hover:text-cyan-400 transition">
-                    {lang.name}
-                  </span>
-                </button>
-              ))}
+            <div ref={langRef}>
+              <button onClick={() => setLangOpen(!langOpen)}
+                className="relative w-9 h-9 rounded-full overflow-hidden transition hover:scale-110"
+                style={{ border: '1px solid var(--border-hover)' }}>
+                <img src={languageOptions.find(l => l.code === i18n.language)?.flag} alt="language" className="w-full h-full object-cover" />
+              </button>
+              <div className={`absolute right-0 mt-3 flex flex-col gap-1 p-2 rounded-xl transition-all duration-300 origin-top ${langOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}`}
+                style={{ background: isDark ? 'rgba(15,12,26,0.92)' : 'rgba(250,248,255,0.96)', backdropFilter: 'blur(16px)', border: '1px solid var(--border)' }}>
+                {languageOptions.map((lang) => (
+                  <button key={lang.code} onClick={() => changeLanguage(lang.code)}
+                    className="group flex items-center gap-3 px-3 py-2 rounded-lg transition"
+                    onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-card-hover)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                    <div className="w-7 h-7 rounded-full overflow-hidden" style={{ border: '1px solid var(--border)' }}>
+                      <img src={lang.flag} alt={lang.name} className="w-full h-full object-cover" />
+                    </div>
+                    <span className="text-xs transition" style={{ letterSpacing: '0.04em', color: 'var(--text-muted)' }}>{lang.name}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="max-w-4xl mx-auto">
+
+          <div className="max-w-4xl mx-auto w-full">
             <div className="animate-slide-left">
-              <p className="mono text-cyan-400 text-sm tracking-widest">
-                {t("hero.welcome")}
-              </p>
-              <h1 className="text-7xl font-bold mt-4 leading-tight animate-glow">
-                {t("hero.hello")} <span className="text-gradient">Míriam</span>
+              <p className="mono text-xs tracking-widest mb-6" style={{ color: 'var(--text-faint)' }}>{t("hero.welcome")}</p>
+              <h1 className="serif animate-glow leading-none"
+                style={{ fontSize: 'clamp(3.5rem,9vw,7rem)', fontWeight: 300, fontStyle: 'italic', color: 'var(--text-primary)' }}>
+                {t("hero.hello")}{' '}
+                <span className="text-gradient not-italic" style={{ fontWeight: 400 }}>Míriam</span>
               </h1>
+              <div className="mt-8 mb-8" style={{ width: '48px', height: '1px', background: isDark ? 'linear-gradient(90deg,#c4b5fd,#f9a8d4)' : 'linear-gradient(90deg,#7c3aed,#db2777)', opacity: 0.5 }} />
             </div>
 
-            <div className="animate-slide-right mt-6 delay-100">
-              <p className="text-2xl font-light text-gray-300 leading-relaxed max-w-2xl">
+            <div className="animate-slide-right">
+              <p className="text-lg font-light leading-relaxed max-w-xl" style={{ color: 'var(--text-muted)', letterSpacing: '0.01em' }}>
                 {t("hero.description")}
               </p>
             </div>
 
-            <div className="flex gap-6 mt-12 animate-fade-up">
-              <button
-                onClick={() => scrollToSection("proyectos")}
-                className="px-8 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-400/50 transition transform hover:scale-105"
-              >
+            {/* ── STATS ── */}
+            <div className="flex gap-10 mt-12 animate-fade-up" style={{ animationDelay: '0.15s' }}>
+              {stats.map(({ value, labelKey }) => (
+                <div key={labelKey} className="stat-item">
+                  <p className="serif text-4xl font-light text-gradient" style={{ fontStyle: 'italic', lineHeight: 1 }}>{value}</p>
+                  <p className="mono text-xs mt-2" style={{ color: 'var(--text-faint)', letterSpacing: '0.1em' }}>{t(labelKey)}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-4 mt-12 animate-fade-up" style={{ animationDelay: '0.25s' }}>
+              <button onClick={() => scrollToSection("proyectos")} className="px-7 py-3 rounded transition hover:scale-105"
+                style={{ background: isDark ? 'linear-gradient(135deg,rgba(167,139,250,0.2),rgba(249,168,212,0.15))' : 'linear-gradient(135deg,rgba(124,58,237,0.1),rgba(219,39,119,0.08))', border: '1px solid var(--border-hover)', letterSpacing: '0.06em', color: 'var(--text-nav-active)', textTransform: 'uppercase', fontSize: '0.75rem' }}>
                 {t("hero.viewWork")}
               </button>
-              <button className="px-8 py-3 border border-cyan-400 rounded-lg font-semibold text-cyan-400 hover:bg-cyan-400/10 transition">
+              <button className="px-7 py-3 rounded transition"
+                style={{ border: '1px solid var(--border)', letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase', fontSize: '0.75rem' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.color = 'var(--text-nav-active)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)'; }}>
                 {t("hero.downloadCV")}
               </button>
             </div>
 
             <div className="mt-16 animate-float">
-              <ChevronDown className="w-6 h-6 text-cyan-400 animate-bounce" />
+              <ChevronDown className="w-5 h-5 animate-bounce" style={{ color: 'var(--text-faint)' }} />
             </div>
           </div>
         </section>
 
-        {/* SOBRE MÍ */}
-        <section id="sobre-mi" className="min-h-screen flex items-center px-6 py-20 reveal">
+        {/* ── SOBRE MÍ ───────────────────────────────────────── */}
+        <section id="sobre-mi" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-5xl mx-auto w-full">
-            <h2 className="text-5xl font-bold mb-12 text-gradient">
-              {t("about.title")}
-            </h2>
+            <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>01 —</p>
+            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("about.title")}</h2>
+            <div className="section-divider" />
 
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="animate-slide-left">
-                <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                  {t("about.p1")}
-                </p>
-                <p className="text-gray-400 text-lg leading-relaxed">
-                  {t("about.p2")}
-                </p>
+            {/* Texto + Cards */}
+            <div className="grid md:grid-cols-2 gap-16 mt-4">
+
+              {/* Texto izquierda */}
+              <div className="animate-slide-left space-y-5">
+                <p className="leading-relaxed" style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>{t("about.p1")}</p>
+                <p className="leading-relaxed" style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{t("about.p2")}</p>
+
+                {/* Quote decorativa */}
+                <blockquote className="mt-8 pl-5 py-1" style={{ borderLeft: '2px solid var(--text-pink)' }}>
+                  <p className="serif text-lg font-light italic" style={{ color: 'var(--text-secondary)', lineHeight: 1.75 }}>
+                    {t("about.quote")}
+                  </p>
+                </blockquote>
               </div>
 
-              <div className="animate-slide-right">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="animate-liquid">
-                    <Code2 className="w-12 h-12 text-cyan-400 mb-4" />
-                    <h3 className="font-bold text-lg mb-2">Desarrollo</h3>
-                    <p className="text-gray-400 text-sm">Full-stack desde frontend hasta infraestructura</p>
+              {/* Cards derecha — ahora verticales, bien proporcionadas */}
+              <div className="animate-slide-right flex flex-col gap-4">
+
+                {/* Card Desarrollo */}
+                <div className="skill-card rounded-sm transition"
+                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '1.75rem' }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
+                  <div className="flex items-start gap-5">
+                    <div className="flex-shrink-0 w-11 h-11 rounded-sm flex items-center justify-center"
+                      style={{ background: isDark ? 'rgba(196,181,253,0.08)' : 'rgba(124,58,237,0.07)', border: '1px solid var(--border)' }}>
+                      <Code2 className="w-5 h-5" style={{ color: 'var(--text-nav-active)' }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-medium text-sm mb-2 tracking-wide" style={{ color: 'var(--text-primary)' }}>
+                        {t("about.cardDev")}
+                      </h3>
+                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                        {t("about.cardDevDesc")}
+                      </p>
+                    </div>
                   </div>
-                  <div className="animate-liquid">
-                    <Zap className="w-12 h-12 text-pink-500 mb-4" />
-                    <h3 className="font-bold text-lg mb-2">Performance</h3>
-                    <p className="text-gray-400 text-sm">Optimización y escalabilidad en sistemas complejos</p>
-                  </div>
+                  <div className="mt-5 h-px" style={{ background: 'linear-gradient(90deg, var(--border-hover), transparent)' }} />
                 </div>
+
+                {/* Card Performance */}
+                <div className="skill-card rounded-sm transition"
+                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '1.75rem', animationDelay: '0.5s' }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
+                  <div className="flex items-start gap-5">
+                    <div className="flex-shrink-0 w-11 h-11 rounded-sm flex items-center justify-center"
+                      style={{ background: isDark ? 'rgba(249,168,212,0.07)' : 'rgba(219,39,119,0.06)', border: '1px solid var(--border)' }}>
+                      <Zap className="w-5 h-5" style={{ color: 'var(--text-pink)' }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-medium text-sm mb-2 tracking-wide" style={{ color: 'var(--text-primary)' }}>
+                        {t("about.cardPerf")}
+                      </h3>
+                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                        {t("about.cardPerfDesc")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-5 h-px" style={{ background: 'linear-gradient(90deg, rgba(249,168,212,0.3), transparent)' }} />
+                </div>
+
+                {/* Card extra — sistemas */}
+                <div className="skill-card rounded-sm transition"
+                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '1.75rem', animationDelay: '1s' }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
+                  <div className="flex items-start gap-5">
+                    <div className="flex-shrink-0 w-11 h-11 rounded-sm flex items-center justify-center"
+                      style={{ background: isDark ? 'rgba(196,181,253,0.05)' : 'rgba(124,58,237,0.05)', border: '1px solid var(--border)' }}>
+                      <Cpu className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-medium text-sm mb-2 tracking-wide" style={{ color: 'var(--text-primary)' }}>
+                        {t("about.cardSys")}
+                      </h3>
+                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                        {t("about.cardSysDesc")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-5 h-px" style={{ background: 'linear-gradient(90deg, var(--border), transparent)' }} />
+                </div>
+
               </div>
             </div>
 
-            {/* Tech Stack */}
-            <div className="mt-16">
-              <h3 className="text-2xl font-bold mb-8">Stack Tecnológico</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {/* Stack de tecnologías */}
+            <div className="mt-20">
+              <p className="mono text-xs tracking-widest mb-8" style={{ color: 'var(--text-faint)' }}>{t("about.stack")}</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
                 {technologies.map((tech, i) => (
-                  <div
-                    key={tech}
-                    className="tech-card px-4 py-3 rounded-lg text-center font-semibold text-cyan-400 text-sm"
-                    style={{ animationDelay: `${i * 0.05}s` }}
-                  >
-                    {tech}
-                  </div>
+                  <div key={tech} className="tech-card px-3 py-2.5 rounded-sm text-center" style={{ animationDelay: `${i * 0.04}s` }}>{tech}</div>
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* EXPERIENCIA */}
-        <section id="experiencia" className="min-h-screen flex items-center px-6 py-20 reveal">
+        {/* ── EXPERIENCIA ────────────────────────────────────── */}
+        <section id="experiencia" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-4xl mx-auto w-full">
-            <h2 className="text-5xl font-bold mb-12 text-gradient">
-              {t("experience.title")}
-            </h2>
+            <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>02 —</p>
+            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("experience.title")}</h2>
+            <div className="section-divider" />
 
-            <div className="space-y-8">
+            <div className="space-y-6 mt-4">
               {experience.map((exp, i) => (
-                <div
-                  key={i}
-                  className="experience-line p-6 bg-slate-900/50 rounded-lg border border-cyan-500/20 hover:border-cyan-500/60 transition"
-                  style={{ animationDelay: `${i * 0.1}s` }}
-                >
-                  <h3 className="text-2xl font-bold text-cyan-400 mb-1">{exp.title}</h3>
-                  <p className="text-gray-400 font-semibold mb-1">{exp.company}</p>
-                  <p className="text-sm text-gray-500 mono mb-4">{exp.period}</p>
+                <div key={i} className="experience-line p-6 rounded-sm transition"
+                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
+                  <div className="flex items-start justify-between gap-4 flex-wrap mb-1">
+                    <h3 className="text-lg font-medium" style={{ color: 'var(--text-primary)' }}>{t(exp.titleKey)}</h3>
+                    <span className="mono text-xs px-2.5 py-1 rounded-sm flex-shrink-0"
+                      style={{ background: 'var(--bg-card-hover)', border: '1px solid var(--border)', color: 'var(--text-faint)' }}>
+                      {t(exp.periodKey)}
+                    </span>
+                  </div>
+                  <p className="text-sm mb-5" style={{ color: 'var(--text-pink)' }}>{t(exp.companyKey)}</p>
                   <ul className="space-y-2">
-                    {exp.points.map((point, j) => (
-                      <li key={j} className="text-gray-300 flex items-start">
-                        <span className="text-pink-500 mr-3 mt-1">›</span>
-                        <span>{point}</span>
+                    {exp.pointKeys.map((key, j) => (
+                      <li key={j} className="flex items-start gap-3 text-sm" style={{ color: 'var(--text-muted)' }}>
+                        <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--text-pink)' }} />
+                        {t(key)}
                       </li>
                     ))}
                   </ul>
@@ -518,40 +497,43 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* PROYECTOS */}
-        <section id="proyectos" className="min-h-screen flex items-center px-6 py-20 reveal">
+        {/* ── PROYECTOS ──────────────────────────────────────── */}
+        <section id="proyectos" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-5xl mx-auto w-full">
-          <h2 className="text-5xl font-bold mb-12 text-gradient">
-            {t("projects.title")}
-          </h2>
+            <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>03 —</p>
+            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("projects.title")}</h2>
+            <div className="section-divider" />
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-5 mt-4">
               {projects.map((project, i) => (
-                <div
-                  key={i}
-                  className="project-card p-6 rounded-lg"
-                  style={{ animationDelay: `${i * 0.1}s` }}
-                >
-                  <div className="text-4xl mb-4">{project.icon}</div>
-                  <h3 className="text-xl font-bold text-white mb-3">{project.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
+                <div key={i} className="project-card p-7 rounded-sm" style={{ animationDelay: `${i * 0.08}s` }}>
+                  <div className="flex items-start justify-between mb-5">
+                    <div className="text-3xl opacity-80">{project.icon}</div>
+                    {project.ongoing && (
+                      <span className="mono text-xs px-2 py-1 rounded-sm" style={{ background: 'rgba(249,168,212,0.08)', border: '1px solid rgba(249,168,212,0.25)', color: 'var(--text-pink)', letterSpacing: '0.08em' }}>
+                        {t("projects.ongoing")}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="font-medium mb-3" style={{ color: 'var(--text-primary)' }}>{t(project.titleKey)}</h3>
+                  <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--text-muted)' }}>{t(project.descKey)}</p>
+                  <div className="flex flex-wrap gap-2 mb-5">
                     {project.tags.map((tag, j) => (
-                      <span
-                        key={j}
-                        className="px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs rounded border border-cyan-500/30 font-semibold"
-                      >
+                      <span key={j} className="px-2.5 py-1 text-xs rounded-sm"
+                        style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--tech-color)', letterSpacing: '0.04em' }}>
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <div className="mt-4 flex gap-3 text-sm">
-                    <a href="#" className="text-cyan-400 hover:text-pink-500 transition flex items-center gap-1">
-                      GitHub <ExternalLink className="w-3 h-3" />
-                    </a>
-                    <a href="#" className="text-cyan-400 hover:text-pink-500 transition flex items-center gap-1">
-                      Demo <ExternalLink className="w-3 h-3" />
-                    </a>
+                  <div className="flex gap-4 text-xs" style={{ letterSpacing: '0.06em' }}>
+                    {['GitHub', 'Demo'].map((label) => (
+                      <a key={label} href="#" className="flex items-center gap-1.5 transition"
+                        style={{ color: 'var(--text-faint)', textTransform: 'uppercase' }}
+                        onMouseEnter={e => e.currentTarget.style.color = 'var(--text-pink)'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'var(--text-faint)'}>
+                        {label} <ExternalLink className="w-3 h-3" />
+                      </a>
+                    ))}
                   </div>
                 </div>
               ))}
@@ -559,87 +541,78 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* EDUCACIÓN & IDIOMAS */}
-        <section id="educacion" className="min-h-screen flex items-center px-6 py-20 reveal">
+        {/* ── EDUCACIÓN & IDIOMAS ────────────────────────────── */}
+        <section id="educacion" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-4xl mx-auto w-full">
-            <h2 className="text-5xl font-bold mb-12 text-gradient">Educación e Idiomas</h2>
+            <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>04 —</p>
+            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("education.title")}</h2>
+            <div className="section-divider" />
 
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="p-6 bg-slate-900/50 rounded-lg border border-cyan-500/20 hover:border-cyan-500/60 transition">
-                <h3 className="text-xl font-bold text-cyan-400 mb-4">Formación Académica</h3>
-                <ul className="space-y-3 text-gray-300">
-                  <li className="border-l-2 border-pink-500 pl-4">
-                    <strong>Ingeniería Informática</strong><br/>
-                    <span className="text-sm text-gray-400">Mención en Desarrollo de Software</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-6 bg-slate-900/50 rounded-lg border border-cyan-500/20 hover:border-cyan-500/60 transition">
-                <h3 className="text-xl font-bold text-pink-500 mb-4">Idiomas</h3>
-                <ul className="space-y-3">
-                  {languages.map((lang) => (
-                    <div key={lang.name} className="flex justify-between items-center">
-                      <span className="text-gray-300">{lang.name}</span>
-                      <span className="text-cyan-400 text-sm font-semibold">{lang.level}</span>
-                    </div>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="p-6 bg-slate-900/50 rounded-lg border border-cyan-500/20 hover:border-cyan-500/60 transition">
-                <h3 className="text-xl font-bold text-cyan-400 mb-4">Habilidades Blandas</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
-                  <li>✓ Trabajo en equipo</li>
-                  <li>✓ Comunicación clara</li>
-                  <li>✓ Metodologías Ágiles</li>
-                  <li>✓ Curiosidad técnica</li>
-                  <li>✓ Problem solving</li>
-                </ul>
-              </div>
+            <div className="grid md:grid-cols-3 gap-5 mt-4">
+              {educationCards.map(({ labelKey, content }) => (
+                <div key={labelKey} className="p-6 rounded-sm transition"
+                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
+                  <p className="mono text-xs tracking-widest mb-5" style={{ color: 'var(--text-faint)' }}>{t(labelKey)}</p>
+                  {content}
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* CONTACTO */}
-        <section id="contacto" className="min-h-screen flex items-center px-6 py-20 reveal">
+        {/* ── CONTACTO ───────────────────────────────────────── */}
+        <section id="contacto" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-4xl mx-auto w-full text-center">
-            <h2 className="text-5xl font-bold mb-6 text-gradient">
-              {t("contact.title")}
-            </h2>
+            <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>05 —</p>
+            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("contact.title")}</h2>
+            <div className="section-divider mx-auto" />
 
-            <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
+            {/* Availability badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-sm mb-8 mt-4"
+              style={{ background: 'rgba(134,239,172,0.05)', border: '1px solid rgba(134,239,172,0.18)' }}>
+              <span className="availability-dot" />
+              <span className="mono text-xs" style={{ color: 'rgba(134,239,172,0.7)', letterSpacing: '0.08em' }}>
+                {t("contact.available")}
+              </span>
+            </div>
+
+            <p className="text-base font-light mb-14 max-w-md mx-auto" style={{ color: 'var(--text-muted)', lineHeight: 1.8 }}>
               {t("contact.description")}
             </p>
 
-            <div className="flex flex-wrap justify-center gap-8 mb-16">
-              <a href="mailto:miriamdomlop@gmail.com" className="flex items-center gap-3 px-6 py-3 bg-cyan-500/10 border border-cyan-500/50 rounded-lg hover:border-cyan-400 hover:bg-cyan-500/20 transition group">
-                <Mail className="w-5 h-5 text-cyan-400 group-hover:animate-bounce" />
-                <span>miriamdomlop@gmail.com</span>
+            <div className="flex flex-wrap justify-center gap-5 mb-16">
+              <a href="mailto:miriamdomlop@gmail.com" className="flex items-center gap-3 px-6 py-3 rounded-sm transition text-sm"
+                style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-secondary)', letterSpacing: '0.03em' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.color = 'var(--text-nav-active)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}>
+                <Mail className="w-4 h-4" />
+                miriamdomlop@gmail.com
               </a>
-              <a href="https://linkedin.com/in/[TU_LINKEDIN]" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-6 py-3 bg-pink-500/10 border border-pink-500/50 rounded-lg hover:border-pink-400 hover:bg-pink-500/20 transition group">
-                <Linkedin className="w-5 h-5 text-pink-400 group-hover:animate-bounce" />
-                <span>LinkedIn</span>
+              <a href="https://linkedin.com/in/[TU_LINKEDIN]" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 px-6 py-3 rounded-sm transition text-sm"
+                style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-pink)', letterSpacing: '0.03em' }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
+                <Linkedin className="w-4 h-4" />
+                LinkedIn
               </a>
-              {/* <a href="https://github.com/[TU_GITHUB]" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-6 py-3 bg-purple-500/10 border border-purple-500/50 rounded-lg hover:border-purple-400 hover:bg-purple-500/20 transition group">
-                <Github className="w-5 h-5 text-purple-400 group-hover:animate-bounce" />
-                <span>GitHub</span>
-              </a> */}
             </div>
 
-            <div className="p-8 bg-slate-900/50 rounded-lg border border-cyan-500/20 animate-pulse-glow">
-              <p className="text-gray-400 mb-4">
-                {t("contact.call")}
-              </p>
-              <p className="text-2xl font-bold text-cyan-400 mono">673257028</p>
+            <div className="inline-block px-10 py-8 rounded-sm animate-pulse-glow"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+              <p className="mono text-xs tracking-widest mb-3" style={{ color: 'var(--text-faint)' }}>{t("contact.call")}</p>
+              <p className="mono text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '0.2em', fontWeight: 400 }}>673 257 028</p>
             </div>
           </div>
         </section>
 
-        {/* FOOTER */}
-        <footer className="border-t border-cyan-500/20 py-8 px-6 text-center text-gray-500 text-sm">
-          <p className="mono">© 2024 Míriam Domenech López. All rights reserved.</p>
+        {/* ── FOOTER ─────────────────────────────────────────── */}
+        <footer className="py-8 px-6 text-center" style={{ borderTop: '1px solid var(--border)' }}>
+          <p className="mono text-xs" style={{ color: 'var(--text-faint)', letterSpacing: '0.08em' }}>{t("footer")}</p>
         </footer>
+
       </div>
     </div>
   );

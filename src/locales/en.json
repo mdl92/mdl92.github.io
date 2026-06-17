@@ -1,28 +1,105 @@
 {
     "hero": {
-        "welcome": "Welcome to my portfolio",
-        "hello": "Hi, I'm",
-        "description": "Software Developer passionate about building robust and scalable solutions. Specialized in full-stack development with experience in distributed architectures, APIs, and complex systems.",
-        "viewWork": "View my work",
-        "downloadCV": "Download CV"
+      "welcome": "Welcome to my portfolio",
+      "hello": "Hi, I'm",
+      "description": "Software Developer passionate about building robust and scalable solutions. Specialized in full-stack development with experience in distributed architectures, APIs, and complex systems.",
+      "viewWork": "View my work",
+      "downloadCV": "Download CV",
+      "statProjects": "projects",
+      "statTech": "technologies",
+      "statYears": "years exp."
     },
     "about": {
-        "title": "About me",
-        "p1": "I'm a Junior Developer with a background in Computer Engineering (Software Development track) from the Valencian Community. I have hands-on experience in application development, legacy service migration, distributed architectures, and real-time systems.",
-        "p2": "My focus is on writing clean, maintainable code that solves real problems. I enjoy learning new technologies and collaborating in multidisciplinary teams."
+      "title": "About me",
+      "p1": "I'm a Junior Developer with a background in Computer Engineering (Software Development track) from the Valencian Community. I have hands-on experience in application development, legacy service migration, distributed architectures, and real-time systems.",
+      "p2": "My focus is on writing clean, maintainable code that solves real problems. I enjoy learning new technologies and collaborating in multidisciplinary teams.",
+      "stack": "Tech stack",
+      "cardDev": "Development",
+      "cardDevDesc": "Full-stack from frontend to infrastructure",
+      "cardPerf": "Performance",
+      "cardPerfDesc": "Optimization and scalability in complex systems",
+      "cardSys": "Systems",
+      "cardSysDesc": "Distributed architectures, ROS2 and production Linux environments.",
+      "quote": "I'm passionate about writing code that doesn't just work — it's elegant, maintainable, and fast."
     },
     "experience": {
-        "title": "Experience"
+      "title": "Experience",
+      "job1Title": "Software Developer",
+      "job1Company": "Gestión Tributaria Territorial",
+      "job1Period": "2024 – Present",
+      "job1p1": "Migration of legacy WCF services to modern APIs",
+      "job1p2": "Development of multiple API services in C# with Swagger documentation",
+      "job1p3": "Work with PL/SQL and .NET for system optimization",
+      "job1p4": "Active participation in architecture and performance improvements",
+      "job2Title": "Software Development Internship",
+      "job2Company": "Wispcontrol, Elche, Alicante",
+      "job2Period": "2023",
+      "job2p1": "Development of management software for Internet service providers",
+      "job2p2": "Implementation of new features in JavaScript, HTML and PHP",
+      "job2p3": "Functional testing and quality assurance",
+      "job2p4": "Ensuring good performance and system stability",
+      "job3Title": "Academic & Personal Projects",
+      "job3Company": "Multiple development initiatives",
+      "job3Period": "In progress",
+      "job3p1": "Tracing and Profiling library for ROS2 in distributed robotic systems",
+      "job3p2": "Unity game development (Puffy) in a multidisciplinary team",
+      "job3p3": "Drone show virtualization using distributed systems and Kafka",
+      "job3p4": "Secure voting application in Go with E2EE and encryption at rest"
     },
     "projects": {
-        "title": "Featured Projects"
+      "title": "Featured Projects",
+      "ongoing": "Ongoing",
+      "p1Title": "ROS2 Tracing & Profiling Library",
+      "p1Desc": "Tool for monitoring and optimizing node performance in distributed robotic systems, integrated into an autonomous Formula Student single-seater.",
+      "p2Title": "Puffy — Virtual Pet",
+      "p2Desc": "Interactive game developed in Unity and C#. Involved in design, programming and testing in close collaboration with a multidisciplinary team.",
+      "p3Title": "Drone Show Virtualization",
+      "p3Desc": "Distributed system connecting three computers via Kafka with secure communication. Robust and scalable client/server architecture.",
+      "p4Title": "Secure Voting Application in Go",
+      "p4Desc": "Secret voting system with client/server architecture. Implements secure authentication, E2EE encryption, secure storage and backups.",
+      "p5Title": "ISP Management Software",
+      "p5Desc": "Application for managing Internet service providers. Developed in JavaScript, HTML and PHP with a focus on functionality and performance.",
+      "p6Title": "Websites for Sports Clubs",
+      "p6Desc": "Design and development of custom websites for sports clubs. Focus on visual identity, performance and user experience.",
+      "p7Title": "Automation Research",
+      "p7Desc": "Exploration and development of automation workflows to optimize repetitive processes, integrating external tools and APIs.",
+      "p8Title": "Self-hosted Server",
+      "p8Desc": "Setup and configuration of a personal server to host web projects, with domain management, SSL and continuous deployment.",
+      "tagAutomation": "Automation"
     },
     "education": {
-        "title": "Education & Languages"
+      "title": "Education & Languages",
+      "trainingLabel": "Education",
+      "degree": "Computer Engineering",
+      "degreeSpec": "Software Development track",
+      "languagesLabel": "Languages",
+      "lang1Name": "Spanish",
+      "lang1Level": "Native",
+      "lang2Name": "Valencian",
+      "lang2Level": "Native",
+      "lang3Name": "English",
+      "lang3Level": "Advanced",
+      "lang4Name": "French",
+      "lang4Level": "Basic",
+      "skillsLabel": "Soft skills",
+      "skill1": "Teamwork",
+      "skill2": "Clear communication",
+      "skill3": "Agile methodologies",
+      "skill4": "Technical curiosity",
+      "skill5": "Problem solving"
     },
     "contact": {
-        "title": "Let's talk?",
-        "description": "I'm always open to collaborations, interesting projects, and new opportunities. Feel free to reach out through any of these channels.",
-        "call": "Or call me at"
-    }
-}
+      "title": "Let's talk?",
+      "description": "I'm always open to collaborations, interesting projects, and new opportunities. Feel free to reach out through any of these channels.",
+      "call": "Or call me at",
+      "available": "available for projects"
+    },
+    "nav": {
+      "about": "About me",
+      "experience": "Experience",
+      "projects": "Projects",
+      "education": "Education",
+      "contact": "Contact"
+    },
+    "footer": "© 2024 Míriam Domenech López. All rights reserved."
+  }

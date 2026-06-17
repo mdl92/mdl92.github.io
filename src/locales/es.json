@@ -1,33 +1,105 @@
 {
-    "hero": {
-      "welcome": "Bienvenido a mi portafolio",
-      "hello": "Hola, soy",
-      "description": "Desarrolladora de Software apasionada por crear soluciones robustas y escalables. Especializada en desarrollo full-stack con experiencia en arquitecturas distribuidas, APIs y sistemas complejos.",
-      "viewWork": "Ver mis trabajos",
-      "downloadCV": "Descargar CV"
-    },
-  
-    "about": {
-      "title": "Sobre mí",
-      "p1": "Soy una desarrolladora Junior con formación en Ingeniería Informática (mención en Desarrollo de Software) de la Comunidad Valenciana. Cuento con experiencia práctica en el desarrollo de aplicaciones, migración de servicios legacy, arquitecturas distribuidas y sistemas de tiempo real.",
-      "p2": "Mi enfoque está en escribir código limpio, mantenible y que resuelva problemas reales. Disfruto aprendiendo nuevas tecnologías y colaborando en equipos multidisciplinarios."
-    },
-  
-    "experience": {
-      "title": "Experiencia"
-    },
-  
-    "projects": {
-      "title": "Proyectos Destacados"
-    },
-  
-    "education": {
-      "title": "Educación e Idiomas"
-    },
-  
-    "contact": {
-      "title": "¿Hablamos?",
-      "description": "Siempre estoy abierta a colaboraciones, proyectos interesantes y nuevas oportunidades. No dudes en contactarme a través de cualquiera de estos canales.",
-      "call": "O llámame al"
-    }
-  }
+  "hero": {
+    "welcome": "Bienvenido a mi portafolio",
+    "hello": "Hola, soy",
+    "description": "Desarrolladora de Software apasionada por crear soluciones robustas y escalables. Especializada en desarrollo full-stack con experiencia en arquitecturas distribuidas, APIs y sistemas complejos.",
+    "viewWork": "Ver mis trabajos",
+    "downloadCV": "Descargar CV",
+    "statProjects": "proyectos",
+    "statTech": "tecnologías",
+    "statYears": "años exp."
+  },
+  "about": {
+    "title": "Sobre mí",
+    "p1": "Soy una desarrolladora Junior con formación en Ingeniería Informática (mención en Desarrollo de Software) de la Comunidad Valenciana. Cuento con experiencia práctica en el desarrollo de aplicaciones, migración de servicios legacy, arquitecturas distribuidas y sistemas de tiempo real.",
+    "p2": "Mi enfoque está en escribir código limpio, mantenible y que resuelva problemas reales. Disfruto aprendiendo nuevas tecnologías y colaborando en equipos multidisciplinarios.",
+    "stack": "Stack tecnológico",
+    "cardDev": "Desarrollo",
+    "cardDevDesc": "Full-stack desde frontend hasta infraestructura",
+    "cardPerf": "Performance",
+    "cardPerfDesc": "Optimización y escalabilidad en sistemas complejos",
+    "cardSys": "Sistemas",
+    "cardSysDesc": "Arquitecturas distribuidas, ROS2 y entornos Linux de producción.",
+    "quote": "Me apasiona escribir código que no solo funcione, sino que sea elegante, mantenible y rápido."
+  },
+  "experience": {
+    "title": "Experiencia",
+    "job1Title": "Desarrolladora de Software",
+    "job1Company": "Gestión Tributaria Territorial",
+    "job1Period": "2024 – Presente",
+    "job1p1": "Migración de servicios WCF heredados a APIs modernas",
+    "job1p2": "Desarrollo de múltiples servicios API en C# con documentación Swagger",
+    "job1p3": "Trabajo con PL/SQL y .NET para optimización de sistemas",
+    "job1p4": "Participación activa en mejora de arquitectura y rendimiento",
+    "job2Title": "Prácticas en Desarrollo de Software",
+    "job2Company": "Wispcontrol, Elche, Alicante",
+    "job2Period": "2023",
+    "job2p1": "Desarrollo de software de gestión para proveedores de Internet",
+    "job2p2": "Implementación de nuevas funcionalidades en JavaScript, HTML y PHP",
+    "job2p3": "Realización de pruebas de funcionalidad y aseguramiento de calidad",
+    "job2p4": "Garantía del buen rendimiento y estabilidad del sistema",
+    "job3Title": "Proyectos Académicos y Personales",
+    "job3Company": "Múltiples iniciativas de desarrollo",
+    "job3Period": "En proceso",
+    "job3p1": "Librería de Tracing y Profiling para ROS2 en sistemas robóticos distribuidos",
+    "job3p2": "Desarrollo de juego en Unity (Puffy) en equipo multidisciplinario",
+    "job3p3": "Virtualización de espectáculos con drones usando sistemas distribuidos y Kafka",
+    "job3p4": "Aplicación segura de votación en Go con E2EE y cifrado en descanso"
+  },
+  "projects": {
+    "title": "Proyectos Destacados",
+    "ongoing": "En curso",
+    "p1Title": "Librería Tracing & Profiling ROS2",
+    "p1Desc": "Herramienta para monitorización y optimización del rendimiento de nodos en sistemas robóticos distribuidos, integrada en un monoplaza autónomo de Formula Student.",
+    "p2Title": "Puffy — Mascota Virtual",
+    "p2Desc": "Juego interactivo desarrollado en Unity y C#. Participación en diseño, programación y pruebas en colaboración estrecha con equipo multidisciplinario.",
+    "p3Title": "Virtualización de Espectáculo con Drones",
+    "p3Desc": "Sistema distribuido conectando tres ordenadores mediante Kafka con comunicación segura. Arquitectura cliente/servidor robusta y escalable.",
+    "p4Title": "Aplicación Segura de Votación en Go",
+    "p4Desc": "Sistema de votación secreta con arquitectura cliente/servidor. Implementa autenticación segura, cifrado E2EE, almacenamiento seguro y copias de seguridad.",
+    "p5Title": "Software de Gestión para ISP",
+    "p5Desc": "Aplicación para gestión de proveedores de Internet. Desarrollo en JavaScript, HTML y PHP con enfoque en funcionalidad y rendimiento.",
+    "p6Title": "Páginas Web para Clubes Deportivos",
+    "p6Desc": "Diseño y desarrollo de sitios web a medida para clubes deportivos. Enfoque en identidad visual, rendimiento y experiencia de usuario.",
+    "p7Title": "Investigación en Automatizaciones",
+    "p7Desc": "Exploración y desarrollo de flujos de automatización para optimizar procesos repetitivos, integrando herramientas y APIs externas.",
+    "p8Title": "Servidor Propio de Alojamiento",
+    "p8Desc": "Montaje y configuración de un servidor personal para alojar proyectos web propios, con gestión de dominios, SSL y despliegue continuo.",
+    "tagAutomation": "Automatización"
+  },
+  "education": {
+    "title": "Educación e Idiomas",
+    "trainingLabel": "Formación",
+    "degree": "Ingeniería Informática",
+    "degreeSpec": "Mención en Desarrollo de Software",
+    "languagesLabel": "Idiomas",
+    "lang1Name": "Español",
+    "lang1Level": "Nativo",
+    "lang2Name": "Valenciano",
+    "lang2Level": "Nativo",
+    "lang3Name": "Inglés",
+    "lang3Level": "Avanzado",
+    "lang4Name": "Francés",
+    "lang4Level": "Básico",
+    "skillsLabel": "Habilidades",
+    "skill1": "Trabajo en equipo",
+    "skill2": "Comunicación clara",
+    "skill3": "Metodologías Ágiles",
+    "skill4": "Curiosidad técnica",
+    "skill5": "Problem solving"
+  },
+  "contact": {
+    "title": "¿Hablamos?",
+    "description": "Siempre estoy abierta a colaboraciones, proyectos interesantes y nuevas oportunidades. No dudes en contactarme a través de cualquiera de estos canales.",
+    "call": "O llámame al",
+    "available": "disponible para proyectos"
+  },
+  "nav": {
+    "about": "Sobre mí",
+    "experience": "Experiencia",
+    "projects": "Proyectos",
+    "education": "Educación",
+    "contact": "Contacto"
+  },
+  "footer": "© 2024 Míriam Domenech López. Todos los derechos reservados."
+}
