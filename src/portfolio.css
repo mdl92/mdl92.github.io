@@ -235,7 +235,7 @@ canvas {
         var(--border-hover) 20%,
         var(--border-hover) 80%,
         transparent 100%);
-    opacity: 0.6;
+    transition: opacity 0.4s ease;
 }
 
 /* ─── STAT ITEMS (hero) ─────────────────────────────────── */

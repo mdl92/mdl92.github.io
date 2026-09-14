@@ -68,12 +68,14 @@ export default function Portfolio() {
   const { t } = useTranslation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [activeSection, setActiveSection] = useState('sobre-mi');
+  const [scrolled, setScrolled] = useState(false);
   const canvasRef = useRef(null);
 
   const sections = ["sobre-mi", "experiencia", "proyectos", "educacion", "contacto"];
 
   useEffect(() => {
     const handleScroll = () => {
+      setScrolled(window.scrollY > 8);
       const scrollPosition = window.scrollY + 200;
       sections.forEach((section) => {
         const element = document.getElementById(section);
@@ -307,11 +309,11 @@ export default function Portfolio() {
               </div>
             </div>
           </div>
-          <div className="navbar-divider" />
+          <div className="navbar-divider" style={{ opacity: scrolled ? 0.6 : 0 }} />
         </nav>
 
         {/* ── HERO ───────────────────────────────────────────── */}
-        <section className="min-h-screen flex items-center px-6 pt-20">
+        <section className="min-h-screen flex items-center px-6 pt-32">
 
           {/* Theme + Lang controls */}
           <div className="absolute top-24 right-8 z-50 flex items-center gap-3">
