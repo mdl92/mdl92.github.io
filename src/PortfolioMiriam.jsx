@@ -3,7 +3,39 @@ import './i18n';
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Linkedin, Mail, ExternalLink, Code2, Zap, Sun, Moon, Terminal, Cpu } from 'lucide-react';
+import { ChevronDown, Linkedin, Mail, ExternalLink, Code2, Zap, Sun, Moon, Cpu } from 'lucide-react';
+import TerminalWidget from './Terminal';
+
+const Logo = ({ size = 30, style }) => (
+  <svg width={size} height={size} viewBox="378 396 498 455" style={{ color: 'var(--text-nav-active)', flexShrink: 0, ...style }}>
+    <g transform="translate(0,1254) scale(0.1,-0.1)" fill="currentColor" stroke="none">
+      <path d="M3880 8469 c0 -5 26 -9 58 -9 96 0 181 -29 235 -79 62 -56 58 25 58
+-1240 1 -1314 6 -1232 -77 -1321 -54 -58 -126 -91 -211 -98 -35 -2 -63 -9 -63
+-13 0 -5 171 -9 380 -9 209 0 380 4 380 8 0 5 -24 9 -52 10 -157 7 -280 100
+-307 235 -8 36 -10 404 -9 1190 l3 1138 36 -49 c20 -26 108 -170 194 -318 593
+-1012 710 -1208 803 -1344 284 -416 623 -702 1012 -853 110 -42 211 -73 150
+-45 -14 6 -63 29 -110 50 -291 133 -563 399 -783 766 -41 70 -91 156 -111 192
+l-35 65 56 95 c30 52 79 136 108 185 29 50 142 243 252 430 110 187 246 419
+303 515 56 96 125 213 154 259 l51 85 5 -776 5 -775 90 53 c50 30 104 60 122
+66 l32 12 3 710 c3 640 5 714 20 741 42 77 105 106 245 113 57 2 100 8 98 13
+-3 4 -132 7 -286 6 l-280 -2 -126 -215 c-70 -118 -147 -251 -173 -295 -26 -44
+-145 -246 -264 -450 -120 -203 -243 -413 -274 -465 -30 -52 -79 -135 -107
+-183 l-52 -88 -158 288 c-157 285 -594 1064 -676 1204 -77 132 -124 170 -245
+194 -52 10 -454 14 -454 4z"/>
+      <path d="M6945 6974 c-275 -49 -578 -214 -849 -466 -96 -88 -286 -298 -286
+-315 0 -31 25 -18 82 43 163 174 472 426 665 541 303 181 617 234 933 158 113
+-28 272 -99 354 -158 198 -144 341 -373 420 -673 54 -207 75 -467 57 -684 -65
+-752 -438 -1191 -1069 -1259 -131 -14 -425 -14 -477 0 -61 16 -112 56 -137
+108 l-23 46 -3 635 -3 636 -124 35 -124 36 -3 -611 -3 -611 -27 -57 c-33 -71
+-93 -137 -156 -171 -57 -31 -150 -57 -204 -57 -21 0 -38 -4 -38 -10 0 -13
+1173 -13 1332 0 393 33 715 177 979 440 176 175 276 336 349 560 58 177 65
+230 65 460 -1 224 -12 294 -77 480 -198 564 -738 913 -1404 909 -82 0 -185 -7
+-229 -15z"/>
+      <path d="M6545 6692 c-33 -20 -88 -57 -123 -81 l-62 -45 0 -406 0 -407 28 -13
+c15 -7 70 -28 122 -46 l95 -32 3 270 c1 148 1 388 0 534 l-3 264 -60 -38z"/>
+    </g>
+  </svg>
+);
 
 export default function Portfolio() {
   const [langOpen, setLangOpen] = useState(false);
@@ -104,9 +136,9 @@ export default function Portfolio() {
 
     let rafId;
     const animate = () => {
-      ctx.fillStyle = isDark ? 'rgba(8,6,18,0.12)' : 'rgba(250,248,255,0.14)';
+      ctx.fillStyle = isDark ? 'rgba(74,52,44,0.12)' : 'rgba(245,240,233,0.14)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      const [r, g, b] = isDark ? [196, 181, 253] : [139, 92, 246];
+      const [r, g, b] = isDark ? [185, 120, 123] : [156, 104, 104];
       particles.forEach((p) => {
         p.x += p.vx; p.y += p.vy;
         if (p.x > canvas.width || p.x < 0) p.vx *= -1;
@@ -180,9 +212,9 @@ export default function Portfolio() {
     {
       labelKey: "education.trainingLabel",
       content: (
-        <div style={{ borderLeft: '1px solid var(--text-pink)', paddingLeft: '1rem', opacity: 0.8 }}>
-          <p className="font-medium text-sm mb-1" style={{ color: 'var(--text-primary)' }}>{t("education.degree")}</p>
-          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t("education.degreeSpec")}</p>
+        <div style={{ borderLeft: '1px solid var(--accent)', paddingLeft: '1rem', opacity: 0.8 }}>
+          <p className="font-medium text-base mb-1" style={{ color: 'var(--text-primary)' }}>{t("education.degree")}</p>
+          <p className="text-base" style={{ color: 'var(--text-muted)' }}>{t("education.degreeSpec")}</p>
         </div>
       ),
     },
@@ -192,8 +224,8 @@ export default function Portfolio() {
         <ul className="space-y-3">
           {[1,2,3,4].map(n => (
             <li key={n} className="flex justify-between items-center">
-              <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{t(`education.lang${n}Name`)}</span>
-              <span className="mono text-xs" style={{ color: 'var(--text-pink)' }}>{t(`education.lang${n}Level`)}</span>
+              <span className="text-base" style={{ color: 'var(--text-secondary)' }}>{t(`education.lang${n}Name`)}</span>
+              <span className="mono text-sm" style={{ color: 'var(--accent)' }}>{t(`education.lang${n}Level`)}</span>
             </li>
           ))}
         </ul>
@@ -204,8 +236,8 @@ export default function Portfolio() {
       content: (
         <ul className="space-y-2.5">
           {[1,2,3,4,5].map(n => (
-            <li key={n} className="flex items-center gap-2.5 text-sm" style={{ color: 'var(--text-muted)' }}>
-              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--text-pink)' }} />
+            <li key={n} className="flex items-center gap-2.5 text-base" style={{ color: 'var(--text-muted)' }}>
+              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--accent)' }} />
               {t(`education.skill${n}`)}
             </li>
           ))}
@@ -217,8 +249,12 @@ export default function Portfolio() {
   const stats = [
     { value: '8+',  labelKey: 'hero.statProjects' },
     { value: '16+', labelKey: 'hero.statTech' },
-    { value: '3+',  labelKey: 'hero.statYears' },
+    { value: '1',   labelKey: 'hero.statYears' },
   ];
+
+  const contactEmail = 'miriamdomlop@gmail.com';
+  const contactPhone = '673 257 028';
+  const linkedinUrl = 'https://linkedin.com/in/[TU_LINKEDIN]';
 
   return (
     <div className="min-h-screen overflow-hidden" style={{ background: 'var(--bg)', color: 'var(--text-primary)', transition: 'background 0.4s ease, color 0.4s ease' }}>
@@ -238,14 +274,10 @@ export default function Portfolio() {
         <nav className="fixed top-0 left-0 right-0 z-50" style={{
           backdropFilter: 'blur(20px)',
           background: 'var(--bg-nav)',
-          borderBottom: '1px solid var(--border-nav)',
           transition: 'background 0.4s ease',
         }}>
           <div className="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
-            <div className="mono text-sm font-medium text-transparent bg-clip-text" style={{
-              backgroundImage: isDark ? 'linear-gradient(120deg,#ddd6fe,#fbcfe8)' : 'linear-gradient(120deg,#7c3aed,#db2777)',
-              letterSpacing: '0.2em',
-            }}>MDL</div>
+            <Logo size={42} />
 
             {/* Desktop */}
             <div className="hidden md:flex gap-10">
@@ -275,6 +307,7 @@ export default function Portfolio() {
               </div>
             </div>
           </div>
+          <div className="navbar-divider" />
         </nav>
 
         {/* ── HERO ───────────────────────────────────────────── */}
@@ -292,8 +325,8 @@ export default function Portfolio() {
                 style={{ border: '1px solid var(--border-hover)' }}>
                 <img src={languageOptions.find(l => l.code === i18n.language)?.flag} alt="language" className="w-full h-full object-cover" />
               </button>
-              <div className={`absolute right-0 mt-3 flex flex-col gap-1 p-2 rounded-xl transition-all duration-300 origin-top ${langOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}`}
-                style={{ background: isDark ? 'rgba(15,12,26,0.92)' : 'rgba(250,248,255,0.96)', backdropFilter: 'blur(16px)', border: '1px solid var(--border)' }}>
+              <div className={`absolute right-0 mt-3 flex flex-col gap-1 p-2 rounded-2xl transition-all duration-300 origin-top ${langOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}`}
+                style={{ background: 'var(--bg-project)', backdropFilter: 'blur(16px)', border: '1px solid var(--border)' }}>
                 {languageOptions.map((lang) => (
                   <button key={lang.code} onClick={() => changeLanguage(lang.code)}
                     className="group flex items-center gap-3 px-3 py-2 rounded-lg transition"
@@ -312,12 +345,12 @@ export default function Portfolio() {
           <div className="max-w-4xl mx-auto w-full">
             <div className="animate-slide-left">
               <p className="mono text-xs tracking-widest mb-6" style={{ color: 'var(--text-faint)' }}>{t("hero.welcome")}</p>
-              <h1 className="serif animate-glow leading-none"
-                style={{ fontSize: 'clamp(3.5rem,9vw,7rem)', fontWeight: 300, fontStyle: 'italic', color: 'var(--text-primary)' }}>
+              <h1 className="heading animate-glow leading-none"
+                style={{ fontSize: 'clamp(3.5rem,9vw,7rem)', fontWeight: 600, color: 'var(--text-primary)' }}>
                 {t("hero.hello")}{' '}
-                <span className="text-gradient not-italic" style={{ fontWeight: 400 }}>Míriam</span>
+                <span className="serif text-gradient" style={{ fontWeight: 500, fontStyle: 'italic' }}>Míriam</span>
               </h1>
-              <div className="mt-8 mb-8" style={{ width: '48px', height: '1px', background: isDark ? 'linear-gradient(90deg,#c4b5fd,#f9a8d4)' : 'linear-gradient(90deg,#7c3aed,#db2777)', opacity: 0.5 }} />
+              <div className="mt-8 mb-8" style={{ width: '48px', height: '1px', background: 'linear-gradient(90deg, var(--text-nav-active), var(--accent))', opacity: 0.5 }} />
             </div>
 
             <div className="animate-slide-right">
@@ -337,16 +370,33 @@ export default function Portfolio() {
             </div>
 
             <div className="flex flex-wrap gap-4 mt-12 animate-fade-up" style={{ animationDelay: '0.25s' }}>
-              <button onClick={() => scrollToSection("proyectos")} className="px-7 py-3 rounded transition hover:scale-105"
-                style={{ background: isDark ? 'linear-gradient(135deg,rgba(167,139,250,0.2),rgba(249,168,212,0.15))' : 'linear-gradient(135deg,rgba(124,58,237,0.1),rgba(219,39,119,0.08))', border: '1px solid var(--border-hover)', letterSpacing: '0.06em', color: 'var(--text-nav-active)', textTransform: 'uppercase', fontSize: '0.75rem' }}>
+              <button onClick={() => scrollToSection("proyectos")} className="px-7 py-3 rounded-full transition hover:scale-105"
+                style={{ background: 'linear-gradient(135deg, var(--bg-card-hover), var(--bg-card))', border: '1px solid var(--border-hover)', letterSpacing: '0.06em', color: 'var(--text-nav-active)', textTransform: 'uppercase', fontSize: '0.75rem' }}>
                 {t("hero.viewWork")}
               </button>
-              <button className="px-7 py-3 rounded transition"
+              <button className="px-7 py-3 rounded-full transition"
                 style={{ border: '1px solid var(--border)', letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase', fontSize: '0.75rem' }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.color = 'var(--text-nav-active)'; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)'; }}>
                 {t("hero.downloadCV")}
               </button>
+            </div>
+
+            <div className="mt-14 animate-fade-up" style={{ animationDelay: '0.35s' }}>
+              <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>{t("terminal.tryMe")}</p>
+              <TerminalWidget
+                t={t}
+                isDark={isDark}
+                scrollToSection={scrollToSection}
+                setTheme={setTheme}
+                changeLanguage={changeLanguage}
+                technologies={technologies}
+                experience={experience}
+                projects={projects}
+                contactEmail={contactEmail}
+                contactPhone={contactPhone}
+                linkedinUrl={linkedinUrl}
+              />
             </div>
 
             <div className="mt-16 animate-float">
@@ -359,7 +409,7 @@ export default function Portfolio() {
         <section id="sobre-mi" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-5xl mx-auto w-full">
             <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>01 —</p>
-            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("about.title")}</h2>
+            <h2 className="heading text-5xl mb-2 text-gradient">{t("about.title")}</h2>
             <div className="section-divider" />
 
             {/* Texto + Cards */}
@@ -368,10 +418,10 @@ export default function Portfolio() {
               {/* Texto izquierda */}
               <div className="animate-slide-left space-y-5">
                 <p className="leading-relaxed" style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>{t("about.p1")}</p>
-                <p className="leading-relaxed" style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{t("about.p2")}</p>
+                <p className="leading-relaxed" style={{ color: 'var(--text-muted)', fontSize: '1.05rem' }}>{t("about.p2")}</p>
 
                 {/* Quote decorativa */}
-                <blockquote className="mt-8 pl-5 py-1" style={{ borderLeft: '2px solid var(--text-pink)' }}>
+                <blockquote className="mt-8 pl-5 py-1" style={{ borderLeft: '2px solid var(--accent)' }}>
                   <p className="serif text-lg font-light italic" style={{ color: 'var(--text-secondary)', lineHeight: 1.75 }}>
                     {t("about.quote")}
                   </p>
@@ -382,20 +432,20 @@ export default function Portfolio() {
               <div className="animate-slide-right flex flex-col gap-4">
 
                 {/* Card Desarrollo */}
-                <div className="skill-card rounded-sm transition"
+                <div className="skill-card rounded-2xl transition"
                   style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '1.75rem' }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
                   <div className="flex items-start gap-5">
-                    <div className="flex-shrink-0 w-11 h-11 rounded-sm flex items-center justify-center"
-                      style={{ background: isDark ? 'rgba(196,181,253,0.08)' : 'rgba(124,58,237,0.07)', border: '1px solid var(--border)' }}>
+                    <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
+                      style={{ background: isDark ? 'rgba(212,192,180,0.12)' : 'rgba(118,101,93,0.08)', border: '1px solid var(--border)' }}>
                       <Code2 className="w-5 h-5" style={{ color: 'var(--text-nav-active)' }} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-medium text-sm mb-2 tracking-wide" style={{ color: 'var(--text-primary)' }}>
                         {t("about.cardDev")}
                       </h3>
-                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                      <p className="text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                         {t("about.cardDevDesc")}
                       </p>
                     </div>
@@ -404,42 +454,42 @@ export default function Portfolio() {
                 </div>
 
                 {/* Card Performance */}
-                <div className="skill-card rounded-sm transition"
+                <div className="skill-card rounded-2xl transition"
                   style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '1.75rem', animationDelay: '0.5s' }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
                   <div className="flex items-start gap-5">
-                    <div className="flex-shrink-0 w-11 h-11 rounded-sm flex items-center justify-center"
-                      style={{ background: isDark ? 'rgba(249,168,212,0.07)' : 'rgba(219,39,119,0.06)', border: '1px solid var(--border)' }}>
-                      <Zap className="w-5 h-5" style={{ color: 'var(--text-pink)' }} />
+                    <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
+                      style={{ background: isDark ? 'rgba(185,120,123,0.14)' : 'rgba(156,104,104,0.10)', border: '1px solid var(--border)' }}>
+                      <Zap className="w-5 h-5" style={{ color: 'var(--accent)' }} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-medium text-sm mb-2 tracking-wide" style={{ color: 'var(--text-primary)' }}>
                         {t("about.cardPerf")}
                       </h3>
-                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                      <p className="text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                         {t("about.cardPerfDesc")}
                       </p>
                     </div>
                   </div>
-                  <div className="mt-5 h-px" style={{ background: 'linear-gradient(90deg, rgba(249,168,212,0.3), transparent)' }} />
+                  <div className="mt-5 h-px" style={{ background: 'linear-gradient(90deg, var(--accent), transparent)' }} />
                 </div>
 
                 {/* Card extra — sistemas */}
-                <div className="skill-card rounded-sm transition"
+                <div className="skill-card rounded-2xl transition"
                   style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '1.75rem', animationDelay: '1s' }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
                   <div className="flex items-start gap-5">
-                    <div className="flex-shrink-0 w-11 h-11 rounded-sm flex items-center justify-center"
-                      style={{ background: isDark ? 'rgba(196,181,253,0.05)' : 'rgba(124,58,237,0.05)', border: '1px solid var(--border)' }}>
-                      <Cpu className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
+                    <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
+                      style={{ background: isDark ? 'rgba(210,165,168,0.14)' : 'rgba(201,159,163,0.12)', border: '1px solid var(--border)' }}>
+                      <Cpu className="w-5 h-5" style={{ color: 'var(--accent)' }} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-medium text-sm mb-2 tracking-wide" style={{ color: 'var(--text-primary)' }}>
                         {t("about.cardSys")}
                       </h3>
-                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                      <p className="text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                         {t("about.cardSysDesc")}
                       </p>
                     </div>
@@ -453,9 +503,9 @@ export default function Portfolio() {
             {/* Stack de tecnologías */}
             <div className="mt-20">
               <p className="mono text-xs tracking-widest mb-8" style={{ color: 'var(--text-faint)' }}>{t("about.stack")}</p>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {technologies.map((tech, i) => (
-                  <div key={tech} className="tech-card px-3 py-2.5 rounded-sm text-center" style={{ animationDelay: `${i * 0.04}s` }}>{tech}</div>
+                  <div key={tech} className="tech-card px-4 py-3.5 rounded-xl text-center" style={{ animationDelay: `${i * 0.04}s` }}>{tech}</div>
                 ))}
               </div>
             </div>
@@ -466,27 +516,27 @@ export default function Portfolio() {
         <section id="experiencia" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-4xl mx-auto w-full">
             <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>02 —</p>
-            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("experience.title")}</h2>
+            <h2 className="heading text-5xl mb-2 text-gradient">{t("experience.title")}</h2>
             <div className="section-divider" />
 
             <div className="space-y-6 mt-4">
               {experience.map((exp, i) => (
-                <div key={i} className="experience-line p-6 rounded-sm transition"
+                <div key={i} className="experience-line p-6 rounded-2xl transition"
                   style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
                   <div className="flex items-start justify-between gap-4 flex-wrap mb-1">
                     <h3 className="text-lg font-medium" style={{ color: 'var(--text-primary)' }}>{t(exp.titleKey)}</h3>
-                    <span className="mono text-xs px-2.5 py-1 rounded-sm flex-shrink-0"
+                    <span className="mono text-xs px-2.5 py-1 rounded-full flex-shrink-0"
                       style={{ background: 'var(--bg-card-hover)', border: '1px solid var(--border)', color: 'var(--text-faint)' }}>
                       {t(exp.periodKey)}
                     </span>
                   </div>
-                  <p className="text-sm mb-5" style={{ color: 'var(--text-pink)' }}>{t(exp.companyKey)}</p>
+                  <p className="text-base mb-5" style={{ color: 'var(--accent)' }}>{t(exp.companyKey)}</p>
                   <ul className="space-y-2">
                     {exp.pointKeys.map((key, j) => (
-                      <li key={j} className="flex items-start gap-3 text-sm" style={{ color: 'var(--text-muted)' }}>
-                        <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--text-pink)' }} />
+                      <li key={j} className="flex items-start gap-3 text-base" style={{ color: 'var(--text-muted)' }}>
+                        <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--accent)' }} />
                         {t(key)}
                       </li>
                     ))}
@@ -501,25 +551,25 @@ export default function Portfolio() {
         <section id="proyectos" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-5xl mx-auto w-full">
             <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>03 —</p>
-            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("projects.title")}</h2>
+            <h2 className="heading text-5xl mb-2 text-gradient">{t("projects.title")}</h2>
             <div className="section-divider" />
 
             <div className="grid md:grid-cols-2 gap-5 mt-4">
               {projects.map((project, i) => (
-                <div key={i} className="project-card p-7 rounded-sm" style={{ animationDelay: `${i * 0.08}s` }}>
+                <div key={i} className="project-card p-7 rounded-2xl" style={{ animationDelay: `${i * 0.08}s` }}>
                   <div className="flex items-start justify-between mb-5">
                     <div className="text-3xl opacity-80">{project.icon}</div>
                     {project.ongoing && (
-                      <span className="mono text-xs px-2 py-1 rounded-sm" style={{ background: 'rgba(249,168,212,0.08)', border: '1px solid rgba(249,168,212,0.25)', color: 'var(--text-pink)', letterSpacing: '0.08em' }}>
+                      <span className="mono text-xs px-2 py-1 rounded-full" style={{ background: 'var(--bg-card-hover)', border: '1px solid var(--border-hover)', color: 'var(--accent)', letterSpacing: '0.08em' }}>
                         {t("projects.ongoing")}
                       </span>
                     )}
                   </div>
-                  <h3 className="font-medium mb-3" style={{ color: 'var(--text-primary)' }}>{t(project.titleKey)}</h3>
-                  <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--text-muted)' }}>{t(project.descKey)}</p>
+                  <h3 className="font-medium text-lg mb-3" style={{ color: 'var(--text-primary)' }}>{t(project.titleKey)}</h3>
+                  <p className="text-base leading-relaxed mb-5" style={{ color: 'var(--text-muted)' }}>{t(project.descKey)}</p>
                   <div className="flex flex-wrap gap-2 mb-5">
                     {project.tags.map((tag, j) => (
-                      <span key={j} className="px-2.5 py-1 text-xs rounded-sm"
+                      <span key={j} className="px-2.5 py-1 text-xs rounded-full"
                         style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--tech-color)', letterSpacing: '0.04em' }}>
                         {tag}
                       </span>
@@ -529,7 +579,7 @@ export default function Portfolio() {
                     {['GitHub', 'Demo'].map((label) => (
                       <a key={label} href="#" className="flex items-center gap-1.5 transition"
                         style={{ color: 'var(--text-faint)', textTransform: 'uppercase' }}
-                        onMouseEnter={e => e.currentTarget.style.color = 'var(--text-pink)'}
+                        onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
                         onMouseLeave={e => e.currentTarget.style.color = 'var(--text-faint)'}>
                         {label} <ExternalLink className="w-3 h-3" />
                       </a>
@@ -545,12 +595,12 @@ export default function Portfolio() {
         <section id="educacion" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-4xl mx-auto w-full">
             <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>04 —</p>
-            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("education.title")}</h2>
+            <h2 className="heading text-5xl mb-2 text-gradient">{t("education.title")}</h2>
             <div className="section-divider" />
 
             <div className="grid md:grid-cols-3 gap-5 mt-4">
               {educationCards.map(({ labelKey, content }) => (
-                <div key={labelKey} className="p-6 rounded-sm transition"
+                <div key={labelKey} className="p-6 rounded-2xl transition"
                   style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
@@ -566,14 +616,14 @@ export default function Portfolio() {
         <section id="contacto" className="min-h-screen flex items-center px-6 py-24 reveal">
           <div className="max-w-4xl mx-auto w-full text-center">
             <p className="mono text-xs tracking-widest mb-4" style={{ color: 'var(--text-faint)' }}>05 —</p>
-            <h2 className="serif text-5xl font-light italic mb-2 text-gradient">{t("contact.title")}</h2>
+            <h2 className="heading text-5xl mb-2 text-gradient">{t("contact.title")}</h2>
             <div className="section-divider mx-auto" />
 
             {/* Availability badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-sm mb-8 mt-4"
-              style={{ background: 'rgba(134,239,172,0.05)', border: '1px solid rgba(134,239,172,0.18)' }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 mt-4"
+              style={{ background: 'var(--bg-card-hover)', border: '1px solid var(--border-hover)' }}>
               <span className="availability-dot" />
-              <span className="mono text-xs" style={{ color: 'rgba(134,239,172,0.7)', letterSpacing: '0.08em' }}>
+              <span className="mono text-xs" style={{ color: 'var(--text-nav-active)', letterSpacing: '0.08em' }}>
                 {t("contact.available")}
               </span>
             </div>
@@ -583,16 +633,16 @@ export default function Portfolio() {
             </p>
 
             <div className="flex flex-wrap justify-center gap-5 mb-16">
-              <a href="mailto:miriamdomlop@gmail.com" className="flex items-center gap-3 px-6 py-3 rounded-sm transition text-sm"
+              <a href={`mailto:${contactEmail}`} className="flex items-center gap-3 px-6 py-3 rounded-full transition text-sm"
                 style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-secondary)', letterSpacing: '0.03em' }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.color = 'var(--text-nav-active)'; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}>
                 <Mail className="w-4 h-4" />
-                miriamdomlop@gmail.com
+                {contactEmail}
               </a>
-              <a href="https://linkedin.com/in/[TU_LINKEDIN]" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 px-6 py-3 rounded-sm transition text-sm"
-                style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-pink)', letterSpacing: '0.03em' }}
+              <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 px-6 py-3 rounded-full transition text-sm"
+                style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--accent)', letterSpacing: '0.03em' }}
                 onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
                 onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
                 <Linkedin className="w-4 h-4" />
@@ -600,10 +650,10 @@ export default function Portfolio() {
               </a>
             </div>
 
-            <div className="inline-block px-10 py-8 rounded-sm animate-pulse-glow"
+            <div className="inline-block px-10 py-8 rounded-2xl animate-pulse-glow"
               style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
               <p className="mono text-xs tracking-widest mb-3" style={{ color: 'var(--text-faint)' }}>{t("contact.call")}</p>
-              <p className="mono text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '0.2em', fontWeight: 400 }}>673 257 028</p>
+              <p className="mono text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '0.2em', fontWeight: 400 }}>{contactPhone}</p>
             </div>
           </div>
         </section>

@@ -7,7 +7,7 @@
       "downloadCV": "Download CV",
       "statProjects": "projects",
       "statTech": "technologies",
-      "statYears": "years exp."
+      "statYears": "year exp."
     },
     "about": {
       "title": "About me",
@@ -101,5 +101,38 @@
       "education": "Education",
       "contact": "Contact"
     },
-    "footer": "© 2024 Míriam Domenech López. All rights reserved."
+    "footer": "© 2024 Míriam Domenech López. All rights reserved.",
+    "terminal": {
+      "tryMe": "Try it —",
+      "placeholder": "type a command...",
+      "welcome1": "Welcome to Míriam's interactive terminal.",
+      "welcome2": "Type 'help' to see the available commands.",
+      "help": "Available commands:",
+      "cmdHelp": "shows this help",
+      "cmdWhoami": "who I am",
+      "cmdSkills": "tech stack",
+      "cmdExperience": "professional experience",
+      "cmdProjects": "featured projects",
+      "cmdEducation": "education and languages",
+      "cmdContact": "ways to contact me",
+      "cmdOpen": "jump to a section (e.g. open contact)",
+      "cmdTheme": "switch theme (dark/light)",
+      "cmdLang": "switch language (es/en/fr)",
+      "cmdClear": "clear the terminal",
+      "cmdDate": "current date and time",
+      "cmdLs": "list sections",
+      "notFound": "command not found: {{cmd}}. Type 'help' to see the available commands.",
+      "sudoJoke": "Permission denied: clean code is the only superuser here.",
+      "openUsage": "Usage: open <section>. Sections: sobre-mi, experiencia, proyectos, educacion, contacto",
+      "langUsage": "Usage: lang <es|en|fr>",
+      "openSuccess": "Navigating to {{section}}...",
+      "openNotFound": "Section not found: {{section}}",
+      "themeSet": "Theme switched to {{theme}}",
+      "langSet": "Language switched to {{lang}}",
+      "contactIntro": "You can find me at:",
+      "experienceIntro": "Professional background:",
+      "projectsIntro": "Some of my projects:",
+      "skillsIntro": "Technologies I work with:",
+      "educationIntro": "Education and languages:"
+    }
   }

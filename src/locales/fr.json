@@ -7,7 +7,7 @@
       "downloadCV": "Télécharger le CV",
       "statProjects": "projets",
       "statTech": "technologies",
-      "statYears": "ans d'exp."
+      "statYears": "an d'exp."
     },
     "about": {
       "title": "À propos de moi",
@@ -101,5 +101,38 @@
       "education": "Formation",
       "contact": "Contact"
     },
-    "footer": "© 2024 Míriam Domenech López. Tous droits réservés."
+    "footer": "© 2024 Míriam Domenech López. Tous droits réservés.",
+    "terminal": {
+      "tryMe": "Essayez —",
+      "placeholder": "tapez une commande...",
+      "welcome1": "Bienvenue dans le terminal interactif de Míriam.",
+      "welcome2": "Tapez 'help' pour voir les commandes disponibles.",
+      "help": "Commandes disponibles :",
+      "cmdHelp": "affiche cette aide",
+      "cmdWhoami": "qui je suis",
+      "cmdSkills": "stack technique",
+      "cmdExperience": "expérience professionnelle",
+      "cmdProjects": "projets phares",
+      "cmdEducation": "formation et langues",
+      "cmdContact": "comment me contacter",
+      "cmdOpen": "aller à une section (ex : open contact)",
+      "cmdTheme": "changer de thème (dark/light)",
+      "cmdLang": "changer de langue (es/en/fr)",
+      "cmdClear": "effacer le terminal",
+      "cmdDate": "date et heure actuelles",
+      "cmdLs": "lister les sections",
+      "notFound": "commande introuvable : {{cmd}}. Tapez 'help' pour voir les commandes disponibles.",
+      "sudoJoke": "Permission refusée : ici, seul le code propre est superutilisateur.",
+      "openUsage": "Usage : open <section>. Sections : sobre-mi, experiencia, proyectos, educacion, contacto",
+      "langUsage": "Usage : lang <es|en|fr>",
+      "openSuccess": "Navigation vers {{section}}...",
+      "openNotFound": "Section introuvable : {{section}}",
+      "themeSet": "Thème changé en {{theme}}",
+      "langSet": "Langue changée en {{lang}}",
+      "contactIntro": "Vous pouvez me trouver sur :",
+      "experienceIntro": "Parcours professionnel :",
+      "projectsIntro": "Quelques-uns de mes projets :",
+      "skillsIntro": "Technologies avec lesquelles je travaille :",
+      "educationIntro": "Formation et langues :"
+    }
   }

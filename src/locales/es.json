@@ -7,7 +7,7 @@
     "downloadCV": "Descargar CV",
     "statProjects": "proyectos",
     "statTech": "tecnologías",
-    "statYears": "años exp."
+    "statYears": "año exp."
   },
   "about": {
     "title": "Sobre mí",
@@ -101,5 +101,38 @@
     "education": "Educación",
     "contact": "Contacto"
   },
-  "footer": "© 2024 Míriam Domenech López. Todos los derechos reservados."
+  "footer": "© 2024 Míriam Domenech López. Todos los derechos reservados.",
+  "terminal": {
+    "tryMe": "Pruébalo —",
+    "placeholder": "escribe un comando...",
+    "welcome1": "Bienvenido a la terminal interactiva de Míriam.",
+    "welcome2": "Escribe 'help' para ver los comandos disponibles.",
+    "help": "Comandos disponibles:",
+    "cmdHelp": "muestra esta ayuda",
+    "cmdWhoami": "quién soy",
+    "cmdSkills": "stack tecnológico",
+    "cmdExperience": "experiencia profesional",
+    "cmdProjects": "proyectos destacados",
+    "cmdEducation": "formación e idiomas",
+    "cmdContact": "formas de contacto",
+    "cmdOpen": "ir a una sección (ej: open contacto)",
+    "cmdTheme": "cambiar tema (dark/light)",
+    "cmdLang": "cambiar idioma (es/en/fr)",
+    "cmdClear": "limpiar la terminal",
+    "cmdDate": "fecha y hora actual",
+    "cmdLs": "listar secciones",
+    "notFound": "comando no encontrado: {{cmd}}. Escribe 'help' para ver los comandos disponibles.",
+    "sudoJoke": "Permiso denegado: aquí el único superusuario es el código limpio.",
+    "openUsage": "Uso: open <sección>. Secciones: sobre-mi, experiencia, proyectos, educacion, contacto",
+    "langUsage": "Uso: lang <es|en|fr>",
+    "openSuccess": "Navegando a {{section}}...",
+    "openNotFound": "Sección no encontrada: {{section}}",
+    "themeSet": "Tema cambiado a {{theme}}",
+    "langSet": "Idioma cambiado a {{lang}}",
+    "contactIntro": "Puedes encontrarme en:",
+    "experienceIntro": "Trayectoria profesional:",
+    "projectsIntro": "Algunos de mis proyectos:",
+    "skillsIntro": "Tecnologías con las que trabajo:",
+    "educationIntro": "Formación e idiomas:"
+  }
 }
